@@ -9,6 +9,8 @@
 #include <pthread.h>
 #include <semaphore.h>
 
+namespace tiny {
+
 class Sem {
  public:
   Sem() {
@@ -27,11 +29,11 @@ class Sem {
     sem_destroy(&sem_);
   }
 
-  bool wait() {
+  bool Wait() {
     return (0 == sem_wait(&sem_));
   }
 
-  bool post() {
+  bool Post() {
     return (0 == sem_post(&sem_));
   }
 
@@ -59,7 +61,7 @@ class Locker {
     return pthread_mutex_unlock(&mutex_) == 0;
   }
 
-  pthread_mutex_t *Get() {
+  pthread_mutex_t* Get() {
     return &mutex_;
   }
 
@@ -79,11 +81,11 @@ class Cond {
     pthread_cond_destroy(&cond_);
   }
 
-  bool Wait(pthread_mutex_t *mutex) {
+  bool Wait(pthread_mutex_t* mutex) {
     return pthread_cond_wait(&cond_, mutex) == 0;
   }
 
-  bool TimeWait(pthread_mutex_t *mutex, struct timespec t) {
+  bool TimeWait(pthread_mutex_t* mutex, struct timespec t) {
     return pthread_cond_timedwait(&cond_, mutex, &t) == 0;
   }
 
@@ -98,5 +100,7 @@ class Cond {
  private:
   pthread_cond_t cond_;
 };
+
+} // namespace tiny
 
 #endif //TINYWEBSERVER_LOCK_LOCKER_H
