@@ -65,6 +65,11 @@ class Log {
 
 };
 
+#define LOG_DEBUG(format, ...) if(0 == close_log_) {Log::GetInstance()->WriteLog(0, format, ##__VA_ARGS__); Log::GetInstance()->Flush();}
+#define LOG_INFO(format, ...) if(0 == close_log_) {Log::GetInstance()->WriteLog(1, format, ##__VA_ARGS__); Log::GetInstance()->Flush();}
+#define LOG_WARN(format, ...) if(0 == close_log_) {Log::GetInstance()->WriteLog(2, format, ##__VA_ARGS__); Log::GetInstance()->Flush();}
+#define LOG_ERROR(format, ...) if(0 == close_log_) {Log::GetInstance()->WriteLog(3, format, ##__VA_ARGS__); Log::GetInstance()->Flush();}
+
 } // namespace tiny
 
 #endif //TINYWEBSERVER_SRC_LOG_LOG_H
