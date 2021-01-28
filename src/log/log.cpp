@@ -6,12 +6,14 @@
 #include <stdarg.h>
 #include "log.h"
 
-tiny::Log::Log()
+namespace tiny {
+
+Log::Log()
     : count_(0),
       is_async_(false) {
 }
 
-tiny::Log::~Log() {
+Log::~Log() {
   if (fp_ != NULL) {
     fclose(fp_);
   }
@@ -20,7 +22,7 @@ tiny::Log::~Log() {
 }
 
 // 异步需要设置阻塞队列的长度, 同步不需要设置
-bool tiny::Log::Init(const char* file_name, int close_log, int log_buf_size, int split_lines, int max_queue_size) {
+bool Log::Init(const char* file_name, int close_log, int log_buf_size, int split_lines, int max_queue_size) {
   // 如果设置了max_queue_size的值，则设置为异步
   if (max_queue_size >= 1) {
     is_async_ = true;
@@ -60,7 +62,7 @@ bool tiny::Log::Init(const char* file_name, int close_log, int log_buf_size, int
   return true;
 }
 
-void tiny::Log::WriteLog(int level, const char* format, ...) {
+void Log::WriteLog(int level, const char* format, ...) {
   struct timeval now = {0, 0};
   gettimeofday(&now, NULL);
   time_t t = now.tv_sec;
@@ -144,10 +146,13 @@ void tiny::Log::WriteLog(int level, const char* format, ...) {
   va_end(valst);
 }
 
-void tiny::Log::Flush() {
+void Log::Flush() {
   mutex_.Lock();
   fflush(fp_);  // 强制刷新写入流缓冲区
   mutex_.Unlock();
 }
+
+} // namespace tiny
+
 
 

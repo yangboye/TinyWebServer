@@ -3,6 +3,7 @@
 
 #include "test/test_semaphore.h"
 #include "src/log/block_queue.h"
+#include "src/cgi_mysql/sql_connection_pool.h"
 
 using std::cout;
 using std::endl;
