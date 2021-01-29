@@ -22,6 +22,7 @@ class Log {
 
   inline static void* FlushLogThread(void* args) {
     Log::GetInstance()->AsyncWriteLog();
+    return NULL;
   }
 
   bool Init(const char* file_name, int close_log, int log_buf_size = 8192, int split_lines = 5000000,
@@ -44,6 +45,7 @@ class Log {
       fputs(single_log.c_str(), fp_);
       mutex_.Unlock();
     }
+    return NULL;
   }
 
  private:

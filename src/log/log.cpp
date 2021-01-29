@@ -110,7 +110,7 @@ void Log::WriteLog(int level, const char* format, ...) {
       today_ = my_tm.tm_mday;
       count_ = 0;
     } else {
-      snprintf(new_log, 255, "%s%s%s.%lld", dir_name_, tail, log_name_, count_ / split_lines_);
+      snprintf(new_log, 255, "%s%s%s.%ld", dir_name_, tail, log_name_, count_ / split_lines_);
     }
     fp_ = fopen(new_log, "a");
   }

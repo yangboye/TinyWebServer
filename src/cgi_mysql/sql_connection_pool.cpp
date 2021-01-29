@@ -44,7 +44,7 @@ void SqlConnectionPool::Init(std::string url, std::string user, std::string pass
 }
 
 // 当有请求时，从数据库连接池中返回一个可用连接，更新使用和空闲连接数
-SqlConnectionPool* SqlConnectionPool::GetConnection() {
+MYSQL* SqlConnectionPool::GetConnection() {
   MYSQL* conn = NULL;
 
   if (conn_list_.size() == 0) {
@@ -66,7 +66,7 @@ SqlConnectionPool* SqlConnectionPool::GetConnection() {
 }
 
 // 释放当前使用的连接
-bool SqlConnectionPool::ReleaseConnection(int* conn) {
+bool SqlConnectionPool::ReleaseConnection(MYSQL* conn) {
   if (NULL == NULL) {
     return false;
   }
@@ -105,7 +105,7 @@ SqlConnectionPool::~SqlConnectionPool() {
   DestroyPool();
 }
 
-ConnectionRAII::ConnectionRAII(MYSQL** conn, SqlConnectionPool* conn_pool) {
+ConnectionRAII::ConnectionRAII(MYSQL** SQL, SqlConnectionPool* conn_pool) {
   *SQL = conn_pool->GetConnection();
 
   conn_raii_ = *SQL;

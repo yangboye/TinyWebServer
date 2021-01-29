@@ -48,7 +48,7 @@ class SqlConnectionPool {
 
 class ConnectionRAII {
  public:
-  ConnectionRAII(MYSQL** conn, SqlConnectionPool* conn_pool);
+  ConnectionRAII(MYSQL** SQL, SqlConnectionPool* conn_pool);
 
   ~ConnectionRAII();
 
